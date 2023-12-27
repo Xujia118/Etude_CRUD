@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function Books() {
-  const [books, setBooks] = useState([]);
+  const [bookList, setBookList] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchAllBooks = async () => {
+    async function fetchBookList() {
       try {
         const res = await axios.get("http://localhost:3001/books");
-        setBooks(res.data);
+        setBookList(res.data);
       } catch (err) {
         console.log(err);
       }
-    };
-    fetchAllBooks();
+    }
+    fetchBookList();
   }, []);
 
   async function handleDelete(id) {
@@ -28,24 +29,25 @@ function Books() {
 
   return (
     <>
-      <h1>Bookshop</h1>
-      <ul>
-        {books.map((book) => (
-          <li key={book.id}>
-            {book.cover && <img src={book.cover} alt="" />}
-            <h2>{book.title}</h2>
+      <h1>My Bookshop</h1>
+      <ul className="menu">
+        {bookList.map((book) => (
+          <li className="menu-item" key={book.id}>
+            <div className="menu-cover">{book.cover}</div>
+            <p>{book.title}</p>
             <p>{book.description}</p>
-            <span>{book.price}</span>
-            <button>
-              <Link to={`update/${book.id}`}>Update</Link>
+            <p>${book.price}</p>
+            <button
+              onClick={() => {
+                navigate(`update/${book.id}`, { state: { book } });
+              }}
+            >
+              Edit
             </button>
             <button onClick={() => handleDelete(book.id)}>Delete</button>
           </li>
         ))}
       </ul>
-      <button>
-        <Link to="/add"> Add new book </Link>
-      </button>
     </>
   );
 }

@@ -1,0 +1,28 @@
+body, html {
+    line-height: 1.6rem;
+}
+
+.menu {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-gap: 1rem;
+}
+
+.menu-cover {
+    width: 200px;
+    height: 280px;
+
+    border: 1px solid black;
+}
+
+.menu-item {
+    grid-column: span 12;
+
+    list-style: none;
+}
+
+@media(min-width: 44rem) {
+    .menu-item {
+        grid-column: span 4;
+    }
+}

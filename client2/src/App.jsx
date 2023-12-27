@@ -1,8 +1,9 @@
-import React from "react";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import Books from "./pages/Books";
+
+import "./App.css";
 import Add from "./pages/Add";
 import Update from "./pages/Update";
+import Books from "./pages/Books";
 
 function App() {
   return (
